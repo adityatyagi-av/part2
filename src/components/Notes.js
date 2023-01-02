@@ -12,6 +12,14 @@ export default function Notes(props) {
     const [newNote, setNewNote] = useState(
         'a new note'
     )
+    const [showAll, setShowAll] = useState(true)
+
+    const notesToShow = showAll
+    ? notes
+    :notes.filter(note=>note.important === true)
+
+
+
     const addNote =(event)=>{
         event.preventDefault()
         console.log('button clicked',event.target)
@@ -32,9 +40,11 @@ export default function Notes(props) {
     }
   return (
     <div>
+
         <h1>Notes</h1>
+        <button onClick={()=> setShowAll(!showAll)}>show {showAll?'important':'all'}</button>
         <ul>
-            {notes.map(note =>
+            {notesToShow.map(note =>
             { return(
                 <Note key={note.id} note={note}/>
             )})
