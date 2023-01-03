@@ -11,7 +11,7 @@ export default function Phonebook() {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filtered, setFiltered] = useState('')
-
+    const [showAll, setShowAll] = useState(true)
 
     
     const updateName=(event)=>{
@@ -47,28 +47,54 @@ export default function Phonebook() {
       else{
       alert(`${newName} is already in the phonebook, Save with new name`)
    
-      }
+      } 
     }
-   
+   //function ends here
+
+
+   const filterArray=(event)=>{
+    setFiltered(event.target.value)
+    const found=persons.some(person=>person.name === filtered)
+    console.log(found)
+    if(found){
+      setShowAll(false)
+      setFiltered(event.target.value)
+    }
+    else{
+      setShowAll(true)
+    }
+   }
 
   return (
     <div>
         <h1>PhoneBook</h1>
-        <p>filter shown with: <input type="text" value={filtered}/></p>
+        <p>filter shown with: <input type="text" value={filtered} onChange={filterArray} /></p>
         <form onSubmit={numberAdd}>
         <p>name: <input type="text" onChange={updateName} value={newName}/></p>
         <p>number: <input type="tel" onChange={updateNumber} value={newNumber}/></p>
         <button>add</button>
         </form>
-    <h1>Numbers</h1>  
+    <h1>Numbers</h1> 
+    {filtered} 
     <ul>
-    {persons.map(person=>{
-      console.log(person.id)
-      return(
-        <li key={person.id}>{person.name} : {person.number}</li>
-      )
-    })
-    }
+      {showAll
+      ?persons.map(person=>{
+        console.log(person.id)
+        return(
+          <li key={person.id}>{person.name} : {person.number}</li>
+        )
+      })
+      
+      :persons.map(person=> {
+        if(person.name==={filtered}){
+          return(
+            <li>{person.name} : {person.number}</li>
+            )
+        }
+        
+      })
+      }
+    
     </ul> 
     </div>
   )
