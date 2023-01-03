@@ -3,9 +3,17 @@ import React,{useState} from 'react'
 export default function Phonebook() {
     const [persons, setPersons] = useState([
         
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
     ])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
+    const [filtered, setFiltered] = useState('')
+
+
+    
     const updateName=(event)=>{
       setNewName(event.target.value)
     }
@@ -46,6 +54,7 @@ export default function Phonebook() {
   return (
     <div>
         <h1>PhoneBook</h1>
+        <p>filter shown with: <input type="text" value={filtered}/></p>
         <form onSubmit={numberAdd}>
         <p>name: <input type="text" onChange={updateName} value={newName}/></p>
         <p>number: <input type="tel" onChange={updateNumber} value={newNumber}/></p>
