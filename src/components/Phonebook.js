@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { isEqual } from 'lodash';
 
 export default function Phonebook() {
     const [persons, setPersons] = useState([
@@ -12,12 +13,24 @@ export default function Phonebook() {
     const numberAdd=(event)=>{
     event.preventDefault()
     console.log(event.target)
-    const obj={
-      name: newName,
-      id: persons.length +1
+    console.log(typeof(event.target.value))
+    const found=persons.some(person=>person.name === newName)
+    console.log(found)
+    if(!found){
+      console.log('already in the list')
+      const obj={
+        name: newName,
+        id: persons.length +1
+      }
+      console.log(obj)
+      setPersons(persons.concat(obj))
+      }
+    else{
+      alert(`${newName} is already in the phonebook, Save with new name`)
+   
+      }
     }
-    setPersons(persons.concat(obj))
-    }
+   
 
   return (
     <div>
